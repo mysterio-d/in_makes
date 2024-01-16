@@ -1,0 +1,13 @@
+.card{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    justify-content: space-around;
+    font-family: 'Mukta',sans-serif;
+ }
+ .card .crd img{
+    width: 300px;
+    height: 200px;
+    border-radius: 6px;
+    margin-top: 55px;
+ }

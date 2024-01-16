@@ -1,0 +1,106 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block metadescription %}
+    {{ product.description|truncatewords:155 }}
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+        {{ product.name }} - FRESH VEG
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .breadcrumbs {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .breadcrumbs a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .breadcrumbs a:hover {
+        text-decoration: underline;
+    }
+
+    .product-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .product-image img {
+        width: 50%;
+        height: auto;
+        margin-left: 200px;
+        margin-top: 20px;
+        
+    }
+
+    .product-info {
+        width: 45%;
+        margin-top: 20px;
+        margin-right: 30px;
+    }
+
+    .product-info h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .product-info p {
+        margin-bottom: 30px;
+    }
+
+    .product-info b {
+        color: red;
+        
+    }
+
+    .add-to-cart {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        
+    }
+
+    .add-to-cart:hover {
+        background-color: #45a049;
+    }
+</style>
+
+
+
+<div class="product-details">
+    <div class="product-image">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    </div>
+    <div class="product-info">
+        <h1>{{ product.name }}</h1>
+        <p>${{ product.price }}</p>
+        <p>{{ product.description }}</p>
+
+        {% if product.stock <= 0 %}
+            <p><b>Out of stock</b></p>
+        {% else %}
+        <a href="{% url 'cart:add_cart' product.id %}" class="add-to-cart">ADD to Cart</a>
+
+
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

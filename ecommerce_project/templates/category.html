@@ -1,0 +1,175 @@
+{% extends "main.html" %}
+{% load static %}
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+
+{% block metadescription %}
+    {% if category %}
+        {{ category.description|truncatewords:155 }}
+    {% else %}
+        Welcome to FRESH VEG where you can buy.
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+        {{ category.name }} - FRESH VEG
+    {% else %}
+        LOOK THROUGH OUR COLLECTIONS
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .container {
+       
+        margin: 0 auto;
+    }
+
+    .hero-image img {
+        width: 1550px;
+        height: 550px;
+    }
+
+    .intro-text {
+        text-align: center;
+        margin-top: 20px;
+        
+    }
+
+    .intro-text p {
+        color: #705D5;
+        font-weight: bold;
+        
+    }
+    
+
+
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .product-card {
+        width: 20%;
+        height: 255px;
+        margin-top: 50px;
+        margin-bottom: 20px;
+        margin: 50px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card img {
+        width: 50%;
+        height: auto;
+        display: block; /* Ensure the image is treated as a block element */
+        margin: 0 auto; /* Center the image horizontally */
+        object-fit: cover;
+    }
+
+    .product-details {
+        padding: 10px;
+        text-align: center;
+    }
+    .category-info a {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        text-decoration: none; 
+        color: black; 
+    }
+    .category-info h1 {
+        display: block;
+        text-align: center;    
+    }
+    .category-info p {
+        display: block;
+        text-align: center;    
+    }
+
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        display: inline-block;
+        margin: 0 4px;
+        padding: 8px 12px;
+        background-color: #eee;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .pagination .active {
+        background-color: #4CAF50;
+        color: white;
+    }
+    
+    
+</style>
+
+
+    <div class="container">
+        {% if category %}
+        <div class="category-info">
+            
+            <div class="category-info">
+    
+    <img src="{{ category.image.url }}" alt="{{ category.name }}" style="width: 700px; height: 400px; display: block; margin: 0 auto; margin-top: 10px;">
+    
+    <h1>{{ category.name }}</h1>
+    <p>{{ category.description }}</p>
+</div>
+
+            
+        
+        {% else %}
+            <div class="hero-image">
+                <img src="{% static 'images/background.jpg' %}" alt="our products">
+            </div>
+            <div class="intro-text">
+                <h1>OUR PRODUCTS</h1>
+                <p>Fresh vegetables are a vibrant and nutritious addition to any meal, offering a burst of color, flavor, and essential nutrients that contribute to a healthy and well-balanced diet.</p>
+            </div>
+        {% endif %}
+
+        <div class="product-list">
+            {% for product in products %}
+                <div class="product-card">
+                    <a href="{{ product.get_url }}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </a>
+                    <div class="product-details">
+                        <h4>{{ product.name }}</h4>
+                        <p>{{ product.price }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            {% if products.paginator.num_pages > 1 %}
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{ pg }}" class="{% if products.number == pg %} active {% endif %}">{{ pg }}</a>
+            {% endfor %}             
+            {% endif %}
+        </div>
+    </div>
+    
+    {% endblock %}
+    
+

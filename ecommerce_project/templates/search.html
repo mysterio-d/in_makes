@@ -1,0 +1,100 @@
+{% extends "main.html" %}
+{% load static %}
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+
+{% block metadescription %}
+    Welcome to FRESH VEG where you can buy fresh and nutritious vegetables.
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .breadcrumbs {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .breadcrumbs a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .breadcrumbs a:hover {
+        text-decoration: underline;
+    }
+
+    .product-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .product-image img {
+        width: 50%;
+        height: auto;
+        margin-left: 200px;
+        margin-top: 20px;
+    }
+
+    .product-info {
+        width: 45%;
+        margin-top: 20px;
+        margin-right: 30px;
+    }
+
+    .product-info h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .product-info p {
+        margin-bottom: 30px;
+    }
+
+    .product-info b {
+        color: red;
+    }
+
+    .add-to-cart {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .add-to-cart:hover {
+        background-color: #45a049;
+    }
+</style>
+
+
+
+<div class="product-details">
+    {% if products %}
+        {% for product in products %}
+            <div class="product-image">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>
+            <div class="product-info">
+                <h1>{{ product.name }}</h1>
+                <p>${{ product.price }}</p>
+                <p>{{ product.description }}</p>
+                {% if product.stock <= 0 %}
+                    <p><b>Out of stock</b></p>
+                {% else %}
+                    <a href="#" class="add-to-cart">ADD to Cart</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}
